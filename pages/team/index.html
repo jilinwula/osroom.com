@@ -1,0 +1,112 @@
+{% extends "osroom.com/pages/based/based.html" %}
+{% block title %}{{_("团队")}}-{% endblock %}
+{% block content %}
+<div id="app" >
+    <div class="row osr-page">
+        <div class="col-xs-12">
+            <h2 class="text-center">{{_("团队")}}</h2>
+            <div>
+                {{_("OSROOM及其配套功能主要由以下核心成员与贡献者协作开发完成, 贡献者无法每个提及, 请见谅")}}.
+                <br>
+                <a href="#other">{{_("查看其他贡献者")}}</a> | <a  v-if="contact" href="#contact">{{_("添加联系")}}</a>
+            </div>
+
+              <h3>{{_("主页成员信息")}}</h3>
+              <hr>
+              <div v-for="team in teams" class="col-sm-12">
+                <div class="osr-text-center col-sm-2">
+                  <img class="img-circle" width=60px" height="60px" :src="team.url+'?w=120&h=120'" alt="头像" >
+                </div>
+                <div class="col-sm-10" >
+                    <a target="_blank" :href="team.link">
+                        <strong>{[team.title]}</strong>
+                    </a>
+                    <span v-html="team.text_html"></span>
+                    <hr class="osr-hr">
+                </div>
+              </div>
+        </div>
+        <p>
+        <div id="other" class="col-xs-12">
+            <h3 v-if="contributors">{{_("其他贡献者")}}</h3>
+            <hr>
+            <div id="galley" class="docs-pictures clearfix">
+                <div  v-for="contributor in contributors" class="osr-img-list col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                     <div class="author author-list">
+                        <a class="avatar" target="_blank" :href="contributor.link">
+                            <img width="48px" height="48px" class="osr-img-circle-b" v-bind:src="contributor.url+'?w=120&h=120'" alt="{{_('头像')}}">
+                        </a>
+                        <div class="info">
+                            <a class="name" target="_blank" :href="contributor.link">
+                                {[contributor.title]}
+                            </a>
+                            <div class="meta">
+                               <span >
+                                   {[contributor.text]}
+                               </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>
+        <div v-if="contact" id="contact" class="col-xs-12">
+            <h3 v-if="contributors">{{_("联系方式")}}</h3>
+            <hr>
+            <div v-html="contact.text_html"></div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var vue = new Vue({
+      el: '#app',
+      delimiters:['{[', ']}'],
+      data:{
+            teams:[],
+            contributors:[],
+            contact:{}
+      },
+      filters: {
+            formatDate: function (time) {
+              return irrformatDate(time, "yyyy-MM-dd hh:mm");
+            }
+      }
+    })
+
+    // 加载完页面执行
+    $(document).ready(function(){
+        get_global();
+    })
+
+    function get_global(){
+        var conditions = [{
+                type:"image",
+                name_regex:"teams-[0-9]+",
+                result_key:"teams"
+             },
+             {
+                type:"image",
+                name_regex:"contributors-[0-9]+",
+                result_key:"contributors"
+             },
+             {
+                type:"text",
+                names:["contact"],
+                result_key:"contact"
+             }
+             ];
+        var d ={
+            conditions:JSON.stringify(conditions)
+
+        }
+        var result = osrHttp("GET","/api/global/media", d, args={not_prompt:true});
+        result.then(function (r) {
+            vue.teams = r.data.medias.teams;
+            vue.contributors = r.data.medias.contributors;
+            vue.contact = r.data.medias.contact?r.data.medias.contact[0]:[];
+        });
+    }
+</script>
+{% endblock %}

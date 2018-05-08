@@ -1,0 +1,85 @@
+<div class="osr-navbar-left navbar-left hidden-xs">
+    <a href="/" class="osr-logo pull-left" title='{{_("首页")}}'>
+        {% if g.site_global.site_config.PC_LOGO_DISPLAY == "logo" %}
+            <img src="{{g.site_global.site_config.LOGO_IMG_URL}}" alt="Logo"/>
+        {% elif g.site_global.site_config.PC_LOGO_DISPLAY == "name" %}
+            {{g.site_global.site_config.APP_NAME}}
+        {% else %}
+            <img src="{{g.site_global.site_config.LOGO_IMG_URL}}" alt="Logo"/>
+            {{g.site_global.site_config.APP_NAME}}
+        {% endif %}
+    </a>
+
+    <ul id="navbar_left" class="nav navbar-nav">
+        <li class="user-menu dropdown">
+            <a class="osr-pointer lv1-a dropdown-toggle" data-toggle="dropdown">
+                {{_("文档")}}
+                <i class="caret"></i>
+            </a>
+            <ul id="doc-menu" class="dropdown-menu dropdown-custom dropdown-menu-right">
+                <li>
+                    <a href="/dd">
+                        {{_("安装部署")}}
+                    </a>
+                </li>
+                <li>
+                    <a href="/ddd">
+                        {{_("API调用")}}
+                    </a>
+                </li>
+                <li>
+                    <a href="/ddd">
+                        {{_("插件开发")}}
+                    </a>
+                </li>
+                <li>
+                    <a href="/ddd">
+                        {{_("主题开发")}}
+                    </a>
+                </li>
+           </ul>
+        </li>
+
+        <li class="user-menu dropdown">
+            <a class="osr-pointer lv1-a dropdown-toggle" data-toggle="dropdown">
+                {{_("插件|主题")}}
+                <i class="caret"></i>
+            </a>
+            <ul id="plugin" class="dropdown-menu dropdown-custom dropdown-menu-right">
+                <li>
+                    <a href="/plugin">
+                        {{_("插件")}}
+                    </a>
+                </li>
+                <li>
+                    <a href="/theme">
+                        {{_("主题")}}
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="user-menu dropdown">
+            <a class="lv1-a" href="/team">
+                {{_("团队")}}
+            </a>
+        </li>
+        <li class="user-menu dropdown">
+            <a class="lv1-a" href="/support">
+                {{_("支持OSROOM")}}
+            </a>
+        </li>
+        <li class="user-menu dropdown">
+            <a class="lv1-a" href="/blog">
+                {{_("博客")}}
+            </a>
+        </li>
+
+        <li class="user-menu dropdown">
+            <a class="lv1-a" href="/participate">
+                {{_("参与贡献")}}
+            </a>
+        </li>
+
+    </ul>
+</div>

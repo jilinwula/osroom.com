@@ -1,0 +1,81 @@
+<!--text 媒体再页面显示模板-->
+<div id="app" class="row osr-edit-page">
+    <section v-if="content" class="osr-panel article">
+        <!-- 文章头-->
+        <h3>
+            {[content.title]}
+        </h3>
+
+        <div class="author">
+            <div class="info">
+                <div class="meta">
+                   <span class="osr-date" >
+                        {[content.time | formatDate]}
+                   </span>
+                </div>
+            </div>
+        </div>
+
+        <article>
+            <!-- 正文-->
+            <div v-html="content.text_html"></div>
+            <!-- //正文-->
+        </article>
+
+        <!-- 正文footer-->
+        <div class="post-footer">
+            <!--&lt;!&ndash;分享&ndash;&gt;-->
+            <!--<div class="share text-center">-->
+                <!--<span>-->
+                    <!--<i class="fa fa-wechat osr-icon-btn osr-success"></i>-->
+                    <!--&nbsp;-->
+                    <!--<i class="fa fa-qq osr-icon-btn osr-secondary"></i>-->
+                    <!--&nbsp;-->
+                    <!--<i class="fa fa-weibo osr-icon-btn osr-warning"></i>-->
+                    <!--&nbsp;-->
+                    <!--<i class="fa fa-github osr-icon-btn osr-default"></i>-->
+                <!--</span>-->
+            <!--</div>-->
+        </div>
+    </section>
+</div>
+<script>
+
+    var vue = new Vue({
+      el: '#app',
+      delimiters:['{[', ']}'],
+      data:{
+            content:null,
+      },
+      filters: {
+            formatDate: function (time) {
+              return irrformatDate(time, "yyyy-MM-dd hh:mm");
+            }
+      }
+    })
+
+    // 加载完页面执行
+    $(document).ready(function(){
+        get_global();
+    });
+
+    function get_global(){
+        var name = $("#name").attr("content");
+        var conditions = [
+             {
+                type:"text",
+                names:[name],
+                result_key:"content"
+             }
+        ];
+        var d ={
+            conditions:JSON.stringify(conditions)
+        }
+
+        var result = osrHttp("GET","/api/global/media", d, args={not_prompt:true});
+        result.then(function (r) {
+            vue.content = r.data.medias.content!=[]?r.data.medias.content[0]:[];
+        });
+    }
+
+</script>
