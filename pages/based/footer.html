@@ -27,7 +27,18 @@
     </a>
   </div>
 
-  <div class="footer-main visible-sm visible-xs">
+  <div class="visible-sm visible-xs text-center">
+      <!--友情链接-->
+      <ul>
+          {%for k,v in g.site_global.site_config.FRIEND_LINK.items() %}
+            <li style="display:inline;">
+                <a href="{{v.url}}">
+                    {{k}}
+                </a>
+            </li>&nbsp;
+          {% endfor %}
+      </ul>
+      <!--//友情链接-->
       <a class="osr-color-success" href="http://www.osroom.com" target="_blank">
           <img src="/theme/static/sys_imgs/osroom-logo.png?h=40" height="14px" width="auto" alt="OSROOM">
       </a>{{_('提供')}}. BSD license.
