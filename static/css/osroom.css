@@ -219,6 +219,34 @@ body {
 /* header */
 
 /* sidebar */
+
+
+@media only screen and (min-width: 736px) and (max-width: 1024px){
+    .osr-sidebar{
+        position: fixed;
+        width:220px;
+        max-height:650px!important;
+        overflow-y: scroll;
+    }
+}
+
+@media only screen and (min-width: 568px) and (max-width: 736px){
+    .osr-sidebar{
+        position: fixed;
+        width:220px;
+        max-height:400px;
+        overflow-y: scroll;
+    }
+}
+
+@media only screen and (max-width: 568px){
+    .osr-sidebar{
+        position: fixed;
+        width:220px;
+        overflow-y: scroll;
+    }
+}
+
 .osr-sidebar-sm-logo{
     height: 14px!important;
     width: auto!important;
