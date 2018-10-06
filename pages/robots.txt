@@ -4,3 +4,4 @@ Disallow: /search/
 Disallow: /search?*
 Disallow: /osr-admin/
 Disallow: /admin/
+Sitemap: https://osroom.com/doc/v1.0/sitemap.xml
